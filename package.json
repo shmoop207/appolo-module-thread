@@ -1,0 +1,38 @@
+{
+  "name": "@appolo/thread",
+  "version": "7.0.0",
+  "description": "appolo thread module",
+  "keywords": [
+    "appolo",
+    "thread"
+  ],
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "appolo": "^7.0.2",
+    "appolo-thread": "^1.0.4",
+    "appolo-utils": "^0.0.51"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "lodash": "^4.17.15",
+    "@types/lodash": "^4.14.149",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.9.5",
+    "bluebird": "^3.7.2",
+    "chai": "^4.2.0",
+    "mocha": "^7.1.1",
+    "supertest": "^4.0.2",
+    "typescript": "^3.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shmoop207/appolo-module-context.git"
+  },
+  "author": {
+    "name": "roman svichar"
+  },
+  "license": "MIT"
+}
