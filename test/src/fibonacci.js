@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Fibonacci = void 0;
 const tslib_1 = require("tslib");
 const __1 = require("../../");
 let Fibonacci = class Fibonacci extends __1.Worker {

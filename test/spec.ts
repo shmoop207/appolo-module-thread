@@ -1,6 +1,6 @@
-import {App, createApp} from 'appolo'
+import {App, createApp} from '@appolo/core'
 import * as request from 'supertest';
-import {ThreadModule, ThreadPool} from '../'
+import {ThreadModule, ThreadPool, ThreadPoolProvider} from '../'
 import {Fibonacci} from "./src/fibonacci";
 
 let should = require('chai').should();
@@ -14,7 +14,7 @@ describe("context module Spec", function () {
 
         app = createApp({root: __dirname, environment: "production", port: 8182});
 
-        await app.module(ThreadModule.for({threads: 1, worker: Fibonacci}));
+        app.module.use(ThreadModule.for({threads: 1, worker: Fibonacci}));
 
         await app.launch();
 
@@ -26,8 +26,9 @@ describe("context module Spec", function () {
 
     it('should get context from manager', async () => {
 
-        let result = await app.injector.get<ThreadPool<number, number>>("threadPool").run(50);
+        let threadPoolProvider = await app.injector.get<ThreadPoolProvider>(ThreadPoolProvider);
 
+        let result = await threadPoolProvider.getPool(Fibonacci).run(50)
         result.should.be.eq(20365011074);
 
     });

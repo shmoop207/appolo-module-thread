@@ -1,38 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ThreadPool = void 0;
 const tslib_1 = require("tslib");
-const appolo_1 = require("appolo");
-const appolo_thread_1 = require("appolo-thread");
-const appolo_utils_1 = require("appolo-utils");
+const inject_1 = require("@appolo/inject");
+const utils_1 = require("@appolo/utils");
 const decorators_1 = require("./decorators");
 let ThreadPool = class ThreadPool {
     async get() {
-        if (!this.moduleOptions.path && !this.moduleOptions.worker) {
-            throw new Error("no worker or thread defined");
-        }
-        let path = this.moduleOptions.path;
-        if (!path) {
-            path = appolo_utils_1.Reflector.getFnMetadata(decorators_1.WorkerSymbol, this.moduleOptions.worker.constructor);
-        }
-        if (!path) {
-            throw new Error("invalid worker path");
-        }
-        const pool = new appolo_thread_1.Pool({
-            path: path,
-            threads: this.moduleOptions.threads,
-            maxThreadJobs: this.moduleOptions.maxThreadJobs
-        });
-        await pool.initialize();
-        return pool;
+        let workers = this.discovery.getParent().findAllReflectData(decorators_1.WorkerSymbol);
+        await utils_1.Promises.map(workers, (exports => this.threadPoolProvider.addWorker(exports.metaData)));
+        return {};
     }
 };
 tslib_1.__decorate([
-    appolo_1.inject()
+    inject_1.inject()
 ], ThreadPool.prototype, "moduleOptions", void 0);
+tslib_1.__decorate([
+    inject_1.inject()
+], ThreadPool.prototype, "discovery", void 0);
+tslib_1.__decorate([
+    inject_1.inject()
+], ThreadPool.prototype, "threadPoolProvider", void 0);
 ThreadPool = tslib_1.__decorate([
-    appolo_1.define(),
-    appolo_1.singleton(),
-    appolo_1.factory()
+    inject_1.define(),
+    inject_1.singleton(),
+    inject_1.factory()
 ], ThreadPool);
 exports.ThreadPool = ThreadPool;
 //# sourceMappingURL=threadPool.js.map

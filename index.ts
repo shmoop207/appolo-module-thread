@@ -1,10 +1,10 @@
 "use strict";
 import {ThreadModule} from "./module/threadModule";
-import {IModuleOptions} from "appolo";
 import {Pool, Worker} from "appolo-thread";
 import {worker} from "./module/src/decorators";
+import {ThreadPoolProvider} from "./module/src/threadPoolProvider";
 
-export interface IOptions extends IModuleOptions {
+export interface IOptions {
 
     id?: string
     worker?: typeof Worker,
@@ -13,6 +13,6 @@ export interface IOptions extends IModuleOptions {
     maxThreadJobs?: number
 }
 
-export {ThreadModule, Pool as ThreadPool, Worker, worker}
+export {ThreadModule, Pool as ThreadPool, ThreadPoolProvider, Worker, worker}
 
 

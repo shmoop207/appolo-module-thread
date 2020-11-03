@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const appolo_utils_1 = require("appolo-utils");
+exports.worker = exports.WorkerSymbol = void 0;
+const utils_1 = require("@appolo/utils");
 exports.WorkerSymbol = "@__workerSymbol__";
-function worker() {
-    let paths = appolo_utils_1.Files.callerPaths(2);
+function worker(params = {}) {
+    let paths = utils_1.Files.callerPaths(2);
     return function (type) {
-        appolo_utils_1.Reflector.setMetadata(exports.WorkerSymbol, paths[1], type);
+        params.path = params.path || paths[1];
+        params.id = utils_1.Classes.className(type);
+        utils_1.Reflector.setMetadata(exports.WorkerSymbol, params, type);
     };
 }
 exports.worker = worker;
