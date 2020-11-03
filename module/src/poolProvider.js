@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ThreadPoolProvider = void 0;
+exports.PoolProvider = void 0;
 const tslib_1 = require("tslib");
 const inject_1 = require("@appolo/inject");
 const appolo_thread_1 = require("appolo-thread");
 const utils_1 = require("@appolo/utils");
-let ThreadPoolProvider = class ThreadPoolProvider {
+let PoolProvider = class PoolProvider {
     constructor() {
         this._pools = new Map();
     }
@@ -18,6 +18,11 @@ let ThreadPoolProvider = class ThreadPoolProvider {
         this._pools.set(params.id, pool);
         await pool.initialize();
     }
+    async run(worker, params) {
+        let pool = this.getPool(worker);
+        let result = await pool.run(params);
+        return result;
+    }
     getPool(id) {
         if (typeof id !== "string") {
             id = utils_1.Classes.className(id);
@@ -27,10 +32,10 @@ let ThreadPoolProvider = class ThreadPoolProvider {
 };
 tslib_1.__decorate([
     inject_1.inject()
-], ThreadPoolProvider.prototype, "moduleOptions", void 0);
-ThreadPoolProvider = tslib_1.__decorate([
+], PoolProvider.prototype, "moduleOptions", void 0);
+PoolProvider = tslib_1.__decorate([
     inject_1.define(),
     inject_1.singleton()
-], ThreadPoolProvider);
-exports.ThreadPoolProvider = ThreadPoolProvider;
-//# sourceMappingURL=threadPoolProvider.js.map
+], PoolProvider);
+exports.PoolProvider = PoolProvider;
+//# sourceMappingURL=poolProvider.js.map

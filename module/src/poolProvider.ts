@@ -8,7 +8,7 @@ import {IWorkerParams} from "./interfaces";
 
 @define()
 @singleton()
-export class ThreadPoolProvider {
+export class PoolProvider {
 
     private _pools = new Map<string, Pool<any, any>>();
     @inject() private moduleOptions: IOptions;
@@ -23,6 +23,14 @@ export class ThreadPoolProvider {
         this._pools.set(params.id, pool);
 
         await pool.initialize();
+    }
+
+    public async run<T,K>(worker:typeof Worker,params:T):Promise<K>{
+        let pool = this.getPool(worker)
+
+        let result = await pool.run(params);
+
+        return result as K;
     }
 
     public getPool<T, K>(id: string | typeof Worker): Pool<T, K> {

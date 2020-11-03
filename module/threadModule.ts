@@ -1,7 +1,6 @@
 import {Module, module,IModuleParams} from "@appolo/engine";
 import {IOptions} from "../index";
-import {ThreadPool} from "./src/threadPool";
-import {ThreadPoolProvider} from "./src/threadPoolProvider";
+import {PoolProvider} from "./src/poolProvider";
 
 
 @module()
@@ -9,7 +8,7 @@ export class ThreadModule extends Module<IOptions> {
 
 
     protected readonly Defaults: Partial<IOptions> = {
-        id: "threadPoolProvider",
+        id: "poolProvider",
         threads: 1
     };
 
@@ -19,7 +18,7 @@ export class ThreadModule extends Module<IOptions> {
     }
 
     public get exports() {
-        return [{id: this._moduleOptions.id, type: ThreadPoolProvider}]
+        return [{id: this._moduleOptions.id, type: PoolProvider}]
 
     }
 
