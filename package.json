@@ -11,7 +11,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@appolo/core": "^8.0.5",
+    "@appolo/core": "^8.0.6",
     "appolo-thread": "^8.0.0",
     "@appolo/utils": "^8.0.3"
   },
